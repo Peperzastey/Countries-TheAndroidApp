@@ -1,0 +1,12 @@
+<resources>
+    <string name="app_name">Countries</string>
+    <string name="country_details_activity_label">Country Details</string>
+
+    <string name="search_field_hint">County name</string>
+    <!-- <string-array name="test_country_names">
+        <item>Poland</item>
+        <item>The Netherlands</item>
+        <item>Germany</item>
+        <item>Italy</item>
+    </string-array> -->
+</resources>
