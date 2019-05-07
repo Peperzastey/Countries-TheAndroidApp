@@ -3,6 +3,9 @@
     <string name="country_details_activity_label">Country Details</string>
 
     <string name="search_field_hint">County name</string>
+
+    <string name="label_capital_city">Capital City</string>
+
     <!-- <string-array name="test_country_names">
         <item>Poland</item>
         <item>The Netherlands</item>

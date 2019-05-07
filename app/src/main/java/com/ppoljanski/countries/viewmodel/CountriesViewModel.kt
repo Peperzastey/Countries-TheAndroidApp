@@ -13,7 +13,6 @@ private const val TAG = "[pp]CountriesViewModel"
 class CountriesViewModel : ViewModel() {
 
     private val dataSource: CountriesDataSource = RestCountriesFetcher()
-
     private val countries: MutableLiveData<List<Country>> = MutableLiveData()
     //TODO SingleLiveEvent for loadError
 
@@ -23,8 +22,13 @@ class CountriesViewModel : ViewModel() {
 
     fun countries(): LiveData<List<Country>> = countries
 
+    fun searchForCountries(searchName: String) {
+        //TODO use Repository instead of DataSource (Repository should be responsible for talking with the appropriate DataSource)
+        dataSource.getCountries(searchName, { Log.d(TAG, it.toString()); countries.value = it }, { Log.d(TAG, it); countries.value = emptyList() })
+    }
+
     private fun loadAllCountries() {
         //TODO use Repository instead of DataSource (Repository should be responsible for talking with the appropriate DataSource)
-        dataSource.getCountries(null, { Log.d(TAG, it.toString()); countries.value = it }, { Log.e(TAG, it) })
+        dataSource.getCountries(null, { Log.d(TAG, it.toString()); countries.value = it }, { Log.d(TAG, it); countries.value = emptyList() })
     }
 }

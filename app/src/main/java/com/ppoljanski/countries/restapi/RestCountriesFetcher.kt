@@ -2,6 +2,7 @@ package com.ppoljanski.countries.restapi
 
 import com.ppoljanski.countries.data.CountriesDataSource
 import com.ppoljanski.countries.model.Country
+import com.ppoljanski.countries.model.CountryWithDetails
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -15,7 +16,7 @@ class RestCountriesFetcher : CountriesDataSource {
         .addConverterFactory(GsonConverterFactory.create())
         .build()
 
-    private val countriesApi = retrofit.create(RestContriesApi::class.java)
+    private val countriesApi = retrofit.create(RestCountriesApi::class.java)
 
     override fun getCountries(searchTerm: String?, onSuccess: (List<Country>) -> Unit, onError: (String) -> Unit) {
         val call = when(searchTerm) {
@@ -38,7 +39,27 @@ class RestCountriesFetcher : CountriesDataSource {
         })
     }
 
-    /*override fun getAllCountries(): List<Country> {
+    override fun getCountryDetails(countryName: String, onSuccess: (CountryWithDetails) -> Unit, onError: (String) -> Unit) {
+        val call = countriesApi.getCountryDetails(countryName)
 
-    }*/
+        call.enqueue(object : Callback<List<CountryWithDetails>> {
+
+            override fun onFailure(call: Call<List<CountryWithDetails>>, t: Throwable) {
+                onError(t.message ?: "No message")
+            }
+
+            override fun onResponse(call: Call<List<CountryWithDetails>>, response: Response<List<CountryWithDetails>>) {
+                if (response.isSuccessful) {
+                    val countryDetails = response.body()?.getOrNull(0)
+                    if (countryDetails == null) {
+                        onError("Empty response body")
+                    } else {
+                        onSuccess(countryDetails)
+                    }
+                } else {
+                    onError("Server response code: ${response.code()}")
+                }
+            }
+        })
+    }
 }

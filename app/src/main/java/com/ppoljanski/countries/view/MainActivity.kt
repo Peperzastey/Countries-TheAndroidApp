@@ -31,14 +31,20 @@ class MainActivity : AppCompatActivity() {
         })
     }
 
-    /*fun search(view: View) {
-        val searchTerm = searchTextField.text
-        startActivity(Intent(this, CountryDetailsActivity::class.java))
-    }*/
+    fun search(view: View) {
+        val searchTerm = searchTextField.text.toString()
+        viewModel.searchForCountries(searchTerm)
+        //searchTextField.setText("")
+    }
 
     fun showCountryDetails(view: View) {
         val itemPosition = recyclerView.getChildLayoutPosition(view)
-        val item = adapter.items.get(itemPosition)
-        Toast.makeText(this, item.name, Toast.LENGTH_SHORT).show()
+        val country = adapter.items[itemPosition]
+        //Toast.makeText(this, country.name, Toast.LENGTH_SHORT).show()
+
+        startActivity(
+            Intent(this, CountryDetailsActivity::class.java)
+                .putExtra(COUNTRY_NAME_EXTRA, country.name)
+        )
     }
 }
