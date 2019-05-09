@@ -39,7 +39,11 @@ class CountryDetailsActivity : AppCompatActivity() {
 
     private fun displayCountryDetails(country: CountryWithDetails) {
         detailsCountryName.text = country.name
+        detailsSubregion.text = country.subregion
         detailsCapitalCity.text = country.capital
+        detailsArea.text = country.area.toString()
+        detailsPopulation.text = country.population.toString()
+        detailsLanguages.text = country.languages.map { it.name }.joinToString()
         centerMapOnCountry(country)
     }
 

@@ -24,7 +24,8 @@ class CountriesViewModel : ViewModel() {
 
     fun searchForCountries(searchName: String) {
         //TODO use Repository instead of DataSource (Repository should be responsible for talking with the appropriate DataSource)
-        dataSource.getCountries(searchName, { Log.d(TAG, it.toString()); countries.value = it }, { Log.d(TAG, it); countries.value = emptyList() })
+        val searchTerm = if (searchName.isNotEmpty()) searchName else null
+        dataSource.getCountries(searchTerm, { Log.d(TAG, it.toString()); countries.value = it }, { Log.d(TAG, it); countries.value = emptyList() })
     }
 
     private fun loadAllCountries() {
