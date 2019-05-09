@@ -6,7 +6,6 @@ import android.os.Bundle
 import android.view.View
 import com.ppoljanski.countries.R
 import kotlinx.android.synthetic.main.activity_main.*
-import android.widget.Toast
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import com.ppoljanski.countries.viewmodel.CountriesViewModel
@@ -31,6 +30,7 @@ class MainActivity : AppCompatActivity() {
         })
     }
 
+    @Suppress("UNUSED_PARAMETER")
     fun search(view: View) {
         val searchTerm = searchTextField.text.toString()
         viewModel.searchForCountries(searchTerm)

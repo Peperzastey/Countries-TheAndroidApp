@@ -10,12 +10,12 @@ import androidx.lifecycle.ViewModelProviders
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.ppoljanski.countries.R
 import com.ppoljanski.countries.viewmodel.CountryDetailsViewModel
-import kotlinx.android.synthetic.main.activity_country_details.*
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MarkerOptions
 import com.ppoljanski.countries.model.CountryWithDetails
+import kotlinx.android.synthetic.main.details_country.*
 
 const val COUNTRY_NAME_EXTRA = "countryName"
 
