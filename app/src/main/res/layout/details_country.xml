@@ -6,17 +6,29 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
+    <ImageView
+        android:id="@+id/detailsFlag"
+        android:layout_width="@dimen/flag_image_width"
+        android:layout_height="@dimen/flag_image_height"
+        android:contentDescription="@string/contentdescr_flag"
+        android:scaleType="fitCenter"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:srcCompat="@tools:sample/avatars" />
+
     <!-- TODO margins from dimen resource -->
     <TextView
         android:id="@+id/detailsCountryName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        tools:text="Japan"
-        android:textAppearance="@style/TextHeadline"/>
+        android:layout_marginStart="16dp"
+        android:textAppearance="@style/TextHeadline"
+        app:layout_constraintBottom_toBottomOf="@+id/detailsFlag"
+        app:layout_constraintStart_toEndOf="@+id/detailsFlag"
+        app:layout_constraintTop_toTopOf="@+id/detailsFlag"
+        tools:text="Japan" />
 
     <View
         android:id="@+id/divider"
@@ -28,7 +40,7 @@
         android:background="?android:attr/listDivider"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/detailsCountryName"/>
+        app:layout_constraintTop_toBottomOf="@+id/detailsFlag" />
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guideline"

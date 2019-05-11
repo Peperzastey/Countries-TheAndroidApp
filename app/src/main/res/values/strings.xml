@@ -3,12 +3,15 @@
     <string name="country_details_activity_label">Country Details</string>
 
     <string name="search_field_hint">County name</string>
+    <string name="error_dialog_title">Error</string>
 
     <string name="label_capital_city">Capital City</string>
     <string name="label_area">Area</string>
     <string name="label_population">Population</string>
     <string name="label_subregion">Subregion</string>
     <string name="label_languages">Languages</string>
+
+    <string name="contentdescr_flag">Flag of the country</string>
 
     <!-- <string-array name="test_country_names">
         <item>Poland</item>

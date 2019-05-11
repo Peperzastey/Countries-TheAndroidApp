@@ -3,6 +3,7 @@ package com.ppoljanski.countries.restapi
 import com.ppoljanski.countries.data.CountriesDataSource
 import com.ppoljanski.countries.model.Country
 import com.ppoljanski.countries.model.CountryWithDetails
+import com.squareup.picasso.Target
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -31,7 +32,7 @@ class RestCountriesFetcher : CountriesDataSource {
             }
 
             override fun onResponse(call: Call<List<Country>>, response: Response<List<Country>>) {
-                if (response.isSuccessful)
+                if (response.isSuccessful || response.code() == 404)
                     onSuccess(response.body() ?: emptyList())
                 else
                     onError("Server response code: ${response.code()}")

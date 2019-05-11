@@ -7,17 +7,13 @@ data class CountryWithDetails(
     val area: Float,
     val population: Long,   //TODO try String
     val languages: List<Language>,    //try List<String> ?
+    val flag: String,       //TODO try android.net.Uri ?
     val latlng: List<Double>) {
 
     val lat
-        get() = latlng[0]
+        get() = if (latlng.size == 2) latlng[0] else Double.NaN
     val lng
-        get() = latlng[1]
-
-    init {
-        if (latlng.size != 2)
-            throw IllegalArgumentException("latlng DoubleArray constructor argument must have 2 elements")
-    }
+        get() = if (latlng.size == 2) latlng[1] else Double.NaN
 }
 
 data class Language(
