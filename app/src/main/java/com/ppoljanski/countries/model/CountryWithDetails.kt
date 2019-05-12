@@ -5,15 +5,20 @@ data class CountryWithDetails(
     val subregion: String,
     val capital: String,
     val area: Float,
-    val population: Long,   //TODO try String
-    val languages: List<Language>,    //try List<String> ?
-    val flag: String,       //TODO try android.net.Uri ?
+    val population: Long,
+    val languages: List<Language>,
+    val flag: String,
     val latlng: List<Double>) {
 
     val lat
         get() = if (latlng.size == 2) latlng[0] else Double.NaN
     val lng
         get() = if (latlng.size == 2) latlng[1] else Double.NaN
+
+    // convert to string convenience getters for use in data binding
+    fun areaString() = area.toString()
+    fun populationString() = population.toString()
+    fun languagesString() = languages.map { it.name }.joinToString()
 }
 
 data class Language(
@@ -22,53 +27,3 @@ data class Language(
     val name: String,
     val nativeName: String
 )
-
-//class LatLng(latlng: List<Double>) {
-//    val lat: Double
-//    val lng: Double
-//
-//    init {
-//        if (latlng.size != 2)
-//            throw IllegalArgumentException("latlng DoubleArray constructor argument must have 2 elements")
-//        lat = latlng[0]
-//        lng = latlng[1]
-//    }
-//}
-
-//class LatLng(private val latlng: List<Double>) {
-//    val lat
-//        get() = latlng[0]
-//    val lng
-//        get() = latlng[1]
-//
-//    init {
-//        if (latlng.size != 2)
-//            throw IllegalArgumentException("latlng DoubleArray constructor argument must have 2 elements")
-//    }
-//}
-
-//class CountryWithDetails(val name: String, val capital: String, val latlng: List<Double>) {
-//    //val capital = capital
-//    val latlng2 = LatLng(latlng)
-//}
-//TODO? toCountry()
-
-/*class CountryWithDetails(val name: String, val capital: String, val latlng2: LatLng) {
-    constructor(name: String, capital: String, latlng: List<Double>) : this(name, capital, LatLng(latlng)) {
-        println("""CountryWithDetails ctor called with:
-            |name:      $name
-            |capital:   $capital
-            |latlng:    $latlng
-        """.trimMargin())
-    }
-
-    init {
-        println("ctor init")
-    }
-}*/
-
-/*class CountryWithDetails(name: String, capital: String, latlng: List<Double>) {
-    val name = name
-    val capital = capital
-    val dupa = LatLng(latlng)
-}*/

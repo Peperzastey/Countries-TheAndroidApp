@@ -9,11 +9,7 @@
         android:layout_margin="4dp"
         tools:context=".view.MainActivity"
         android:onClick="showCountryDetails">
-    <!-- android:layout_margin="4dp" -->
     <!-- TODO style as attr <- from app theme (?)-->
-    <!-- android:clickable="true"
-        android:focusable="true" -->
-    <!-- android:foreground="?android:attr/selectableItemBackground" -->
 
     <!-- TODO? just TextView -->
     <androidx.constraintlayout.widget.ConstraintLayout

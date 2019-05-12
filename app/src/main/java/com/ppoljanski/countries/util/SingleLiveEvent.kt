@@ -1,4 +1,4 @@
-package com.ppoljanski.countries.data
+package com.ppoljanski.countries.util
 
 import androidx.annotation.MainThread
 import androidx.lifecycle.LifecycleOwner

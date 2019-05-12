@@ -8,20 +8,17 @@
     tools:context=".view.CountryDetailsActivity">
 
     <!-- TODO better horizontal layout for details data -->
-    <androidx.core.widget.NestedScrollView
-        android:id="@+id/detailsScrollView"
+    <fragment
+        android:id="@+id/detailsFragment"
+        android:name="com.ppoljanski.countries.view.CountryDetailsFragment"
+        tools:layout="@layout/fragment_country_details"
         android:layout_width="0dp"
         android:layout_height="match_parent"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@id/map"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintHorizontal_weight="1">
-
-        <include
-            layout="@layout/details_country"/>
-
-    </androidx.core.widget.NestedScrollView>
+        app:layout_constraintHorizontal_weight="1"/>
 
     <!-- TODO contentDescription on map View -->
     <fragment
@@ -33,7 +30,7 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@id/detailsScrollView"
+        app:layout_constraintStart_toEndOf="@id/detailsFragment"
         app:layout_constraintHorizontal_weight="2"/>
 
     <ProgressBar

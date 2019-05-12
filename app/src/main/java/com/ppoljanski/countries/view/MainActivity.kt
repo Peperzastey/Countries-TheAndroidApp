@@ -12,10 +12,7 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import com.ppoljanski.countries.viewmodel.CountriesViewModel
 
-private const val TAG = "[pp]MainActivity"
-
 class MainActivity : AppCompatActivity() {
-    //TODO? move RecyclerView with its Adapter to a separate Fragment
 
     private val viewModel by lazy(LazyThreadSafetyMode.NONE) { ViewModelProviders.of(this)[CountriesViewModel::class.java] }
     private val adapter by lazy(LazyThreadSafetyMode.NONE) { CountriesAdapter() }
@@ -26,9 +23,8 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        //Q in onCreateView callback?
         recyclerView.adapter = adapter
-        //TODO if no internet connection/rest api error -> show this test data (ultimately: data from Room local database)
+
         viewModel.countries().observe(this, Observer {
             adapter.items = it
         })
@@ -56,13 +52,11 @@ class MainActivity : AppCompatActivity() {
     fun search(view: View) {
         val searchTerm = searchTextField.text.toString()
         viewModel.searchForCountries(searchTerm)
-        //searchTextField.setText("")
     }
 
     fun showCountryDetails(view: View) {
         val itemPosition = recyclerView.getChildLayoutPosition(view)
         val country = adapter.items[itemPosition]
-        //Toast.makeText(this, country.name, Toast.LENGTH_SHORT).show()
 
         startActivity(
             Intent(this, CountryDetailsActivity::class.java)

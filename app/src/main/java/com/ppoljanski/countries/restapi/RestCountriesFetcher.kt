@@ -3,7 +3,6 @@ package com.ppoljanski.countries.restapi
 import com.ppoljanski.countries.data.CountriesDataSource
 import com.ppoljanski.countries.model.Country
 import com.ppoljanski.countries.model.CountryWithDetails
-import com.squareup.picasso.Target
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response

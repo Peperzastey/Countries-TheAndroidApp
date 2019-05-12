@@ -1,38 +1,41 @@
 package com.ppoljanski.countries.viewmodel
 
 import android.app.Application
-import android.content.res.Resources
-import android.graphics.Bitmap
-import android.graphics.drawable.BitmapDrawable
 import android.graphics.drawable.Drawable
+import android.graphics.drawable.PictureDrawable
 import android.util.Log
+import android.widget.ImageView
+import androidx.databinding.BindingAdapter
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.AndroidViewModel
+import com.bumptech.glide.Glide
+import com.bumptech.glide.load.DataSource
+import com.bumptech.glide.load.engine.GlideException
+import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
+import com.bumptech.glide.request.RequestListener
+import com.bumptech.glide.request.target.Target
+import com.ppoljanski.countries.R
 import com.ppoljanski.countries.data.CountriesDataSource
-import com.ppoljanski.countries.data.SingleLiveEvent
+import com.ppoljanski.countries.util.SingleLiveEvent
 import com.ppoljanski.countries.model.CountryWithDetails
-import com.ppoljanski.countries.restapi.ImageFetcher
 import com.ppoljanski.countries.restapi.RestCountriesFetcher
-import com.squareup.picasso.Picasso
-import com.squareup.picasso.Target
-import java.lang.Exception
+import com.ppoljanski.countries.util.svgloading.SvgSoftwareLayerSetter
 
 private const val TAG = "[pp]DetailsViewModel"
 
 class CountryDetailsViewModel(application: Application) : AndroidViewModel(application) {
 
     private val dataSource: CountriesDataSource = RestCountriesFetcher()
-    private val imageFetcher = ImageFetcher()
-    private val flagTarget = FlagTarget()
 
     private val country = MutableLiveData<CountryWithDetails>()
-    private val flag = MutableLiveData<Drawable>()
     private val loadError = SingleLiveEvent<String>()
     private val progressbarVisible = MutableLiveData<Boolean>()
 
+    private var storedFlagDrawable: Drawable? = null
+    private var storedFlagUrl: String? = null
+
     fun country(): LiveData<CountryWithDetails> = country
-    fun flag(): LiveData<Drawable> = flag
     fun loadError(): LiveData<String> = loadError
     fun progressbarVisible(): LiveData<Boolean> = progressbarVisible
 
@@ -44,8 +47,7 @@ class CountryDetailsViewModel(application: Application) : AndroidViewModel(appli
             countryName, {
                 Log.d(TAG, it.toString())
                 country.value = it
-                imageFetcher.getCountryFlag(country.value, flagTarget)
-                // hide progressbar after map fragment is loaded
+                // progressbar is hidden after map fragment is loaded
             }, {
                 Log.e(TAG, it)
                 loadError.value = it
@@ -61,23 +63,61 @@ class CountryDetailsViewModel(application: Application) : AndroidViewModel(appli
         progressbarVisible.value = false
     }
 
-    private inner class FlagTarget : Target {
+    @BindingAdapter("imageUrl")
+    fun loadFlagImage(view: ImageView, url: String?) {
+        if (url == null)
+            return
+        if (storedFlagUrl == url) {
+            Log.d(TAG, "apply stored flag image")
+            view.setImageDrawable(storedFlagDrawable)
+        } else {
+            // fetch flag image from the web
+            Log.d(TAG, "fetch flag image")
+            //TODO? move out of this function and use clone()
+            val requestBuilder = Glide.with(view.context)
+                .`as`(PictureDrawable::class.java)
+                .placeholder(R.drawable.flag_loading_placeholder)
+                .error(R.drawable.flag_loading_error)
+                .transition(DrawableTransitionOptions.withCrossFade())
+                //.listener(SvgSoftwareLayerSetter())
+                .addListener(SvgSoftwareLayerSetter())
 
-        val resources: Resources = getApplication<Application>().resources
-
-        override fun onPrepareLoad(placeHolderDrawable: Drawable?) {
-            flag.value = placeHolderDrawable
+            requestBuilder
+                .load(url)
+                .addListener(StoringRequestListener()) // listener is called on the main thread
+                .into(view)
         }
-
-        override fun onBitmapFailed(e: Exception?, errorDrawable: Drawable?) {
-            flag.value = errorDrawable
-            loadError.value = "Failed to load flag image"
-        }
-
-        override fun onBitmapLoaded(bitmap: Bitmap?, from: Picasso.LoadedFrom?) {
-            Log.d("BITMAP", "${bitmap?.toString()}")
-            flag.value = BitmapDrawable(resources, bitmap)
-        }
-
     }
+
+    inner class StoringRequestListener : RequestListener<PictureDrawable> {
+
+        override fun onLoadFailed(ex: GlideException?, model: Any?, target: Target<PictureDrawable>?, isFirstResource: Boolean): Boolean = false
+
+        override fun onResourceReady(resource: PictureDrawable?, model: Any?, target: Target<PictureDrawable>?, dataSource: DataSource?, isFirstResource: Boolean): Boolean {
+            storedFlagDrawable = resource
+            storedFlagUrl = model as String
+            return false
+        }
+    }
+
+    /*companion object {
+
+        @BindingAdapter("imageUrl")
+        @JvmStatic fun loadFlagImage(view: ImageView, url: String?) {
+            if (url == null)
+                return
+            Log.d(TAG, "loadFlagImage")
+            //TODO move
+            val requestBuilder = Glide.with(view.context)
+                .`as`(PictureDrawable::class.java)
+                .placeholder(R.drawable.flag_loading_placeholder)
+                .error(R.drawable.flag_loading_error)
+                .transition(DrawableTransitionOptions.withCrossFade())
+                .listener(SvgSoftwareLayerSetter())
+
+            requestBuilder
+                .load(url)
+                .into(view)
+        }
+    }*/
 }

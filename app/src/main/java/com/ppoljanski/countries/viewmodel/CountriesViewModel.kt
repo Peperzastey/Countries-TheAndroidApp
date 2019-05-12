@@ -5,7 +5,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.ppoljanski.countries.data.CountriesDataSource
-import com.ppoljanski.countries.data.SingleLiveEvent
+import com.ppoljanski.countries.util.SingleLiveEvent
 import com.ppoljanski.countries.model.Country
 import com.ppoljanski.countries.restapi.RestCountriesFetcher
 
