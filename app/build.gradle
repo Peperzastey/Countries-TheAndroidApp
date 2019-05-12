@@ -42,7 +42,7 @@ dependencies {
     implementation 'com.squareup.retrofit2:converter-gson:2.5.0'
     implementation 'com.google.android.gms:play-services-maps:16.1.0'
     implementation 'com.github.bumptech.glide:glide:4.9.0'
-    //TODO? change support library version for Glide?
+    // support library requirement for Glide
     implementation 'androidx.legacy:legacy-support-v4:1.0.0'
     implementation 'androidx.lifecycle:lifecycle-viewmodel-ktx:2.0.0'
     kapt 'com.github.bumptech.glide:compiler:4.9.0'

@@ -10,6 +10,7 @@ import com.ppoljanski.countries.R
 import kotlinx.android.synthetic.main.activity_main.*
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
+import com.ppoljanski.countries.model.CountriesAdapter
 import com.ppoljanski.countries.viewmodel.CountriesViewModel
 
 class MainActivity : AppCompatActivity() {

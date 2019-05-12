@@ -1,4 +1,4 @@
-package com.ppoljanski.countries.restapi
+package com.ppoljanski.countries.model.datasource.restapi
 
 import com.ppoljanski.countries.model.Country
 import com.ppoljanski.countries.model.CountryWithDetails
@@ -14,7 +14,7 @@ interface RestCountriesApi {
     @GET("/rest/v2/name/{name}?fields=name")
     fun getCountriesName(@Path("name") searchName: String): Call<List<Country>>
 
-    //TODO by alpha3Code (REST API)?
+    // by alpha3Code instead of name?
     @GET("/rest/v2/name/{name}?fullText=true&fields=name;subregion;capital;area;population;languages;flag;latlng")
     fun getCountryDetails(@Path("name") countryName: String): Call<List<CountryWithDetails>>
 }

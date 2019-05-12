@@ -17,13 +17,9 @@ import com.ppoljanski.countries.R
 import com.ppoljanski.countries.model.CountryWithDetails
 import com.ppoljanski.countries.viewmodel.CountryDetailsViewModel
 import com.ppoljanski.countries.databinding.FragmentCountryDetailsBinding
-import com.ppoljanski.countries.util.databinding.CountryBindingComponent
+import com.ppoljanski.countries.viewmodel.databinding.CountryBindingComponent
 
 class CountryDetailsFragment : Fragment() {
-
-    companion object {
-        fun newInstance() = CountryDetailsFragment()
-    }
 
     private lateinit var viewModel: CountryDetailsViewModel
     private lateinit var viewBinding: FragmentCountryDetailsBinding
@@ -34,14 +30,17 @@ class CountryDetailsFragment : Fragment() {
         viewModel = activity?.run {
             ViewModelProviders.of(this).get(CountryDetailsViewModel::class.java)
         } ?: throw Exception("Invalid Activity")
-
-        viewModel.country().observe(this, Observer { displayCountryDetails(it) })
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        //return inflater.inflate(R.layout.fragment_country_details, container, false)
         viewBinding = DataBindingUtil.inflate(inflater, R.layout.fragment_country_details, container, false, CountryBindingComponent(viewModel))
         return viewBinding.root
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        //detailsCountryName.movementMethod = ScrollingMovementMethod()
+        viewModel.country().observe(this, Observer { displayCountryDetails(it) })
     }
 
     private fun displayCountryDetails(country: CountryWithDetails) {

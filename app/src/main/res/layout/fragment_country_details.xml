@@ -8,14 +8,22 @@
             type="com.ppoljanski.countries.model.CountryWithDetails"/>
     </data>
 
-    <androidx.core.widget.NestedScrollView
+    <HorizontalScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:fillViewport="true"
+        android:scrollbars="none">
 
-        <include
-            layout="@layout/details_country"
-            app:country="@{country}"/>
+        <androidx.core.widget.NestedScrollView
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent">
 
-    </androidx.core.widget.NestedScrollView>
+            <include
+                layout="@layout/details_country"
+                app:country="@{country}"/>
+
+        </androidx.core.widget.NestedScrollView>
+
+    </HorizontalScrollView>
 
 </layout>

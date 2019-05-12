@@ -10,8 +10,9 @@
     
     <androidx.constraintlayout.widget.ConstraintLayout
         xmlns:tools="http://schemas.android.com/tools"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:padding="8dp">
     
         <ImageView
             android:id="@+id/detailsFlag"
@@ -19,14 +20,11 @@
             android:layout_height="@dimen/flag_image_height"
             android:contentDescription="@string/contentdescr_flag"
             android:scaleType="fitCenter"
-            android:layout_marginStart="8dp"
-            android:layout_marginTop="8dp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             tools:srcCompat="@tools:sample/avatars"
             app:imageUrl="@{country.flag}"/>
-    
-        <!-- TODO margins from dimen resource -->
+
         <TextView
             android:id="@+id/detailsCountryName"
             android:layout_width="wrap_content"
@@ -36,6 +34,7 @@
             app:layout_constraintBottom_toBottomOf="@+id/detailsFlag"
             app:layout_constraintStart_toEndOf="@+id/detailsFlag"
             app:layout_constraintTop_toTopOf="@+id/detailsFlag"
+            android:singleLine="true"
             tools:text="Japan"
             android:text="@{country.name}"/>
     
@@ -43,42 +42,33 @@
             android:id="@+id/divider"
             android:layout_width="match_parent"
             android:layout_height="1dp"
-            android:layout_marginStart="8dp"
             android:layout_marginTop="8dp"
-            android:layout_marginEnd="8dp"
             android:background="?android:attr/listDivider"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/detailsFlag" />
-    
-        <androidx.constraintlayout.widget.Guideline
-            android:id="@+id/guideline"
+
+        <androidx.constraintlayout.widget.Barrier
+            android:id="@+id/barrier"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
-            app:layout_constraintGuide_percent="0.4" />
-    
+            app:barrierDirection="right"
+            app:constraint_referenced_ids="detailsLabelSubregion,
+                detailsLabelCapitalCity,
+                detailsLabelArea,
+                detailsLabelPopulation,
+                detailsLabelLanguages"/>
+
         <TextView
             android:id="@+id/detailsLabelSubregion"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
             android:layout_marginTop="8dp"
             android:text="@string/label_subregion"
-            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintStart_toStartOf="@id/detailsFlag"
             app:layout_constraintTop_toBottomOf="@id/divider"
             android:textAppearance="@style/TextDetailHeadline"/>
-    
-        <TextView
-            android:id="@+id/detailsSubregion"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            app:layout_constraintBaseline_toBaselineOf="@id/detailsLabelSubregion"
-            app:layout_constraintStart_toStartOf="@id/guideline"
-            tools:text="Eastern Asia"
-            android:text="@{country.subregion}"
-            android:textAppearance="@style/TextAppearance.MaterialComponents.Body2"/>
-    
+
         <TextView
             android:id="@+id/detailsLabelCapitalCity"
             android:layout_width="wrap_content"
@@ -88,17 +78,7 @@
             app:layout_constraintStart_toStartOf="@id/detailsLabelSubregion"
             app:layout_constraintTop_toBottomOf="@id/detailsLabelSubregion"
             android:textAppearance="@style/TextDetailHeadline"/>
-    
-        <TextView
-            android:id="@+id/detailsCapitalCity"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            app:layout_constraintBaseline_toBaselineOf="@id/detailsLabelCapitalCity"
-            app:layout_constraintStart_toStartOf="@id/guideline"
-            tools:text="Tokyo"
-            android:text="@{country.capital}"
-            android:textAppearance="@style/TextAppearance.MaterialComponents.Body2"/>
-    
+
         <TextView
             android:id="@+id/detailsLabelArea"
             android:layout_width="wrap_content"
@@ -108,17 +88,7 @@
             app:layout_constraintStart_toStartOf="@id/detailsLabelSubregion"
             app:layout_constraintTop_toBottomOf="@id/detailsLabelCapitalCity"
             android:textAppearance="@style/TextDetailHeadline"/>
-    
-        <TextView
-            android:id="@+id/detailsArea"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            app:layout_constraintBaseline_toBaselineOf="@id/detailsLabelArea"
-            app:layout_constraintStart_toStartOf="@id/guideline"
-            tools:text="377930.0"
-            android:text="@{country.areaString()}"
-            android:textAppearance="@style/TextAppearance.MaterialComponents.Body2"/>
-    
+
         <TextView
             android:id="@+id/detailsLabelPopulation"
             android:layout_width="wrap_content"
@@ -128,34 +98,69 @@
             app:layout_constraintStart_toStartOf="@id/detailsLabelSubregion"
             app:layout_constraintTop_toBottomOf="@id/detailsLabelArea"
             android:textAppearance="@style/TextDetailHeadline"/>
-    
-        <TextView
-            android:id="@+id/detailsPopulation"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            app:layout_constraintBaseline_toBaselineOf="@id/detailsLabelPopulation"
-            app:layout_constraintStart_toStartOf="@id/guideline"
-            tools:text="126960000"
-            android:text="@{country.populationString()}"
-            android:textAppearance="@style/TextAppearance.MaterialComponents.Body2"/>
-    
+
         <TextView
             android:id="@+id/detailsLabelLanguages"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
-            android:paddingBottom="8dp"
             android:text="@string/label_languages"
             app:layout_constraintStart_toStartOf="@id/detailsLabelSubregion"
             app:layout_constraintTop_toBottomOf="@id/detailsLabelPopulation"
             android:textAppearance="@style/TextDetailHeadline"/>
-    
+
+
+        <TextView
+            android:id="@+id/detailsSubregion"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:text="@{country.subregion}"
+            android:textAppearance="@style/TextAppearance.MaterialComponents.Body2"
+            app:layout_constraintBaseline_toBaselineOf="@id/detailsLabelSubregion"
+            app:layout_constraintStart_toStartOf="@id/barrier"
+            tools:text="Eastern Asia" />
+
+        <TextView
+            android:id="@+id/detailsCapitalCity"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:text="@{country.capital}"
+            android:textAppearance="@style/TextAppearance.MaterialComponents.Body2"
+            app:layout_constraintBaseline_toBaselineOf="@id/detailsLabelCapitalCity"
+            app:layout_constraintStart_toStartOf="@id/barrier"
+            tools:text="Tokyo" />
+
+        <TextView
+            android:id="@+id/detailsArea"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            app:layout_constraintBaseline_toBaselineOf="@id/detailsLabelArea"
+            app:layout_constraintStart_toStartOf="@id/barrier"
+            tools:text="377930.0"
+            android:text="@{country.areaString()}"
+            android:textAppearance="@style/TextAppearance.MaterialComponents.Body2"/>
+
+        <TextView
+            android:id="@+id/detailsPopulation"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            app:layout_constraintBaseline_toBaselineOf="@id/detailsLabelPopulation"
+            app:layout_constraintStart_toStartOf="@id/barrier"
+            tools:text="126960000"
+            android:text="@{country.populationString()}"
+            android:textAppearance="@style/TextAppearance.MaterialComponents.Body2"/>
+
         <TextView
             android:id="@+id/detailsLanguages"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
             app:layout_constraintBaseline_toBaselineOf="@id/detailsLabelLanguages"
-            app:layout_constraintStart_toStartOf="@id/guideline"
+            app:layout_constraintStart_toStartOf="@id/barrier"
             tools:text="Japanese"
             android:text="@{country.languagesString()}"
             android:textAppearance="@style/TextAppearance.MaterialComponents.Body2"/>

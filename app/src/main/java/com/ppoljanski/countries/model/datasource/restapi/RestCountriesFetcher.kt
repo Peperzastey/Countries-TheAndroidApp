@@ -1,6 +1,6 @@
-package com.ppoljanski.countries.restapi
+package com.ppoljanski.countries.model.datasource.restapi
 
-import com.ppoljanski.countries.data.CountriesDataSource
+import com.ppoljanski.countries.model.datasource.CountriesDataSource
 import com.ppoljanski.countries.model.Country
 import com.ppoljanski.countries.model.CountryWithDetails
 import retrofit2.Call

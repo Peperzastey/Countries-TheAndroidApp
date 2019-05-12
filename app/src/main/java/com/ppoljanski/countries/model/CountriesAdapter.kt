@@ -1,10 +1,10 @@
-package com.ppoljanski.countries.view
+package com.ppoljanski.countries.model
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.ppoljanski.countries.R
-import com.ppoljanski.countries.model.Country
+import com.ppoljanski.countries.view.CountryViewHolder
 
 class CountriesAdapter : RecyclerView.Adapter<CountryViewHolder>() {
 

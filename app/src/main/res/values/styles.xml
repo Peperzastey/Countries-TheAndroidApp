@@ -6,6 +6,7 @@
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
+        <item name="android:scrollbarThumbVertical">?colorAccent</item>
     </style>
 
     <style name="TextHeadline" parent="TextAppearance.MaterialComponents.Headline6">

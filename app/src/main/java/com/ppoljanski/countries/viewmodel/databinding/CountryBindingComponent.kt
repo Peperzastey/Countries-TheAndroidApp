@@ -1,4 +1,4 @@
-package com.ppoljanski.countries.util.databinding
+package com.ppoljanski.countries.viewmodel.databinding
 
 import androidx.databinding.DataBindingComponent
 import com.ppoljanski.countries.viewmodel.CountryDetailsViewModel

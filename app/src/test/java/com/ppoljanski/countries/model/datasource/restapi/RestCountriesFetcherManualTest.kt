@@ -1,11 +1,11 @@
-package com.ppoljanski.countries.restapi
+package com.ppoljanski.countries.model.datasource.restapi
 
-import com.ppoljanski.countries.data.CountriesDataSource
+import com.ppoljanski.countries.model.datasource.CountriesDataSource
 import com.ppoljanski.countries.model.CountryWithDetails
 import org.junit.Assert
 import org.junit.Test
 
-class RestCountriesFetcherTest {
+class RestCountriesFetcherManualTest {
 
     private val restDataSource: CountriesDataSource = RestCountriesFetcher()
 
@@ -14,10 +14,9 @@ class RestCountriesFetcherTest {
         class Lock(@Volatile var lock: Int = 0)
         val lock = Lock()
         val onSuccessHandler: (CountryWithDetails) -> Unit = {
-            println("$it\nname: ${it.name}\ncapital: ${it.capital}\nlatlng: ${it.latlng}\nlatlng.lat: ${it.lat}\nlatlng.lng: ${it.lng}")  // \nlatlng2: ${it.latlng2}
-            //\nlatlng.lat: ${it.latlng2.lat}\nlatlng.lng: ${it.latlng2.lng}
+            println("$it\nname: ${it.name}\ncapital: ${it.capital}\nlatlng: ${it.latlng}\nlatlng.lat: ${it.lat}\nlatlng.lng: ${it.lng}")
 
-            Assert.assertEquals(1, 1)
+            //Assert.assertEquals(1, 1)
             lock.lock = 1
         }
         val onErrorHandler: (String) -> Unit = {
@@ -27,6 +26,6 @@ class RestCountriesFetcherTest {
 
         restDataSource.getCountryDetails("poland", onSuccessHandler, onErrorHandler)
 
-        while (lock.lock != 1) {}
+        while (lock.lock != 1) {} // just a spinlock
     }
 }

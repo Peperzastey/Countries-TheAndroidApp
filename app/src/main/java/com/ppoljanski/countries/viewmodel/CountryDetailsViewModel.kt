@@ -16,17 +16,18 @@ import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
 import com.bumptech.glide.request.RequestListener
 import com.bumptech.glide.request.target.Target
 import com.ppoljanski.countries.R
-import com.ppoljanski.countries.data.CountriesDataSource
+import com.ppoljanski.countries.model.Repository
 import com.ppoljanski.countries.util.SingleLiveEvent
 import com.ppoljanski.countries.model.CountryWithDetails
-import com.ppoljanski.countries.restapi.RestCountriesFetcher
+import com.ppoljanski.countries.util.ImageLoader
 import com.ppoljanski.countries.util.svgloading.SvgSoftwareLayerSetter
 
 private const val TAG = "[pp]DetailsViewModel"
 
 class CountryDetailsViewModel(application: Application) : AndroidViewModel(application) {
 
-    private val dataSource: CountriesDataSource = RestCountriesFetcher()
+    private val repository = Repository
+    private val imageLoader = ImageLoader()
 
     private val country = MutableLiveData<CountryWithDetails>()
     private val loadError = SingleLiveEvent<String>()
@@ -43,7 +44,7 @@ class CountryDetailsViewModel(application: Application) : AndroidViewModel(appli
         if (country.value?.name == countryName)
             return
         showProgressbar()
-        dataSource.getCountryDetails(
+        repository.getCountryDetails(
             countryName, {
                 Log.d(TAG, it.toString())
                 country.value = it
@@ -73,19 +74,7 @@ class CountryDetailsViewModel(application: Application) : AndroidViewModel(appli
         } else {
             // fetch flag image from the web
             Log.d(TAG, "fetch flag image")
-            //TODO? move out of this function and use clone()
-            val requestBuilder = Glide.with(view.context)
-                .`as`(PictureDrawable::class.java)
-                .placeholder(R.drawable.flag_loading_placeholder)
-                .error(R.drawable.flag_loading_error)
-                .transition(DrawableTransitionOptions.withCrossFade())
-                //.listener(SvgSoftwareLayerSetter())
-                .addListener(SvgSoftwareLayerSetter())
-
-            requestBuilder
-                .load(url)
-                .addListener(StoringRequestListener()) // listener is called on the main thread
-                .into(view)
+            imageLoader.loadSvgImage(view, url, StoringRequestListener())
         }
     }
 
@@ -99,25 +88,4 @@ class CountryDetailsViewModel(application: Application) : AndroidViewModel(appli
             return false
         }
     }
-
-    /*companion object {
-
-        @BindingAdapter("imageUrl")
-        @JvmStatic fun loadFlagImage(view: ImageView, url: String?) {
-            if (url == null)
-                return
-            Log.d(TAG, "loadFlagImage")
-            //TODO move
-            val requestBuilder = Glide.with(view.context)
-                .`as`(PictureDrawable::class.java)
-                .placeholder(R.drawable.flag_loading_placeholder)
-                .error(R.drawable.flag_loading_error)
-                .transition(DrawableTransitionOptions.withCrossFade())
-                .listener(SvgSoftwareLayerSetter())
-
-            requestBuilder
-                .load(url)
-                .into(view)
-        }
-    }*/
 }
