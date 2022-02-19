@@ -12,7 +12,7 @@ import retrofit2.converter.gson.GsonConverterFactory
 class RestCountriesFetcher : CountriesDataSource {
 
     private val retrofit = Retrofit.Builder()
-        .baseUrl("https://restcountries.eu")
+        .baseUrl("https://restcountries.com")
         .addConverterFactory(GsonConverterFactory.create())
         .build()
 

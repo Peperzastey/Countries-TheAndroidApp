@@ -1,9 +1,6 @@
 package com.ppoljanski.countries.view
 
-import android.app.Activity
 import android.content.DialogInterface
-import android.content.Intent
-import android.graphics.drawable.PictureDrawable
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
@@ -11,21 +8,15 @@ import android.view.View
 import androidx.appcompat.app.AlertDialog
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
-import com.bumptech.glide.Glide
-import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions.withCrossFade
-import com.google.android.gms.maps.CameraUpdateFactory
+import com.google.android.gms.common.ConnectionResult.SUCCESS
+import com.google.android.gms.common.GoogleApiAvailability
 import com.ppoljanski.countries.R
 import com.ppoljanski.countries.viewmodel.CountryDetailsViewModel
-import com.google.android.gms.maps.GoogleMap
-import com.google.android.gms.maps.SupportMapFragment
-import com.google.android.gms.maps.model.LatLng
-import com.google.android.gms.maps.model.MarkerOptions
-import com.ppoljanski.countries.model.CountryWithDetails
-import com.ppoljanski.countries.util.svgloading.SvgSoftwareLayerSetter
 import kotlinx.android.synthetic.main.activity_country_details.*
-import kotlinx.android.synthetic.main.details_country.*
 
 const val COUNTRY_NAME_EXTRA = "countryName"
+
+//private const val GOOGLE_PLAY_SERVICES_ERROR_REQUEST_CODE = 1
 
 private const val TAG = "[pp]DetailsActivity"
 
@@ -38,6 +29,14 @@ class CountryDetailsActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_country_details)
+
+        /*val googleApiAvailability = GoogleApiAvailability.getInstance()
+        val statusCode = googleApiAvailability.isGooglePlayServicesAvailable(this)
+        if (statusCode != SUCCESS) {
+            dialogRef = googleApiAvailability.getErrorDialog(this, statusCode, GOOGLE_PLAY_SERVICES_ERROR_REQUEST_CODE)
+                .also { it.show() }
+        }*/
+        //TODO onActivityResult <- GOOGLE_PLAY_SERVICES_ERROR_REQUEST_CODE
 
         viewModel.progressbarVisible().observe(this, Observer {
             progressbar.visibility = if (it == true) View.VISIBLE else View.GONE
@@ -61,15 +60,5 @@ class CountryDetailsActivity : AppCompatActivity() {
         dialogRef?.dismiss()
         dialogRef = null
         super.onDestroy()
-    }
-
-    companion object {
-
-        fun showDetailsFor(countryName: String, parentActivity: Activity) {
-            parentActivity.startActivity(
-                Intent(parentActivity, CountryDetailsActivity::class.java)
-                    .putExtra(COUNTRY_NAME_EXTRA, countryName)
-            )
-        }
     }
 }

@@ -19,6 +19,8 @@ import com.ppoljanski.countries.viewmodel.CountryDetailsViewModel
 import com.ppoljanski.countries.databinding.FragmentCountryDetailsBinding
 import com.ppoljanski.countries.viewmodel.databinding.CountryBindingComponent
 
+//private const val GOOGLE_PLAY_SERVICES_ERROR_REQUEST_CODE = 1
+
 class CountryDetailsFragment : Fragment() {
 
     private lateinit var viewModel: CountryDetailsViewModel
@@ -27,6 +29,14 @@ class CountryDetailsFragment : Fragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        /*val googleApiAvailability = GoogleApiAvailability.getInstance()
+        val statusCode = googleApiAvailability.isGooglePlayServicesAvailable(context)
+        if (statusCode != SUCCESS) {
+            //dialog =
+            googleApiAvailability.getErrorDialog(activity, statusCode, GOOGLE_PLAY_SERVICES_ERROR_REQUEST_CODE)
+        }*/
+
         viewModel = activity?.run {
             ViewModelProviders.of(this).get(CountryDetailsViewModel::class.java)
         } ?: throw Exception("Invalid Activity")
